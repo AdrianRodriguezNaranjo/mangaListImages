@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>update-manga</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">update-manga</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="6">
+        <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="pickImage()"></ion-img>
+        <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
+          (click)="pickImage()"></ion-img>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="primary" fill="outline" (click)="pickImage()">
+          <ion-icon slot="start" name="image-outline"></ion-icon>
+          Pick an image
+        </ion-button>
+        <ion-button color="danger" fill="outline" (click)="discardImage()">
+          <ion-icon slot="start" name="aperture"></ion-icon>
+          Discard image
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div id="container">
+    <form (ngSubmit)="updateManga()">
+      <ion-input id="mangaNameInput" className="rounded-input" type="text" name="name" placeholder="name" [(ngModel)]="mangaName"
+        required />
+      <ion-text id="errorName" *ngIf="!mangaName" color="danger">
+        El nombre del manga es requerido.
+      </ion-text>
+      <ion-input id="mangaSynopsisInput" className="rounded-input" type="text" name="synopsis" placeholder="synopsis"
+        [(ngModel)]="mangaSynopsis" />
+      <ion-input id="mangaChapterInput" className="rounded-input" type="number" name="chapter" placeholder="chapter" [(ngModel)]="mangaChapter"
+      required min="1" />
+      <ion-text *ngIf="!mangaChapter" color="danger">
+        El número del capítulo es requerido
+      </ion-text>
+      <ion-text *ngIf="mangaChapter < 1" color="danger">
+        El número del capítulo debe ser mayor o igual a 1.
+      </ion-text>
+      <ion-button (click)="gotoList()" color="danger">Cancelar</ion-button>
+      <ion-button type="submit">Actualizar manga</ion-button>      
+    </form>
+  </div>
+</ion-content>
